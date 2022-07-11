@@ -1,6 +1,5 @@
 #!/bin/sh
 VERSION=$(git describe --tags HEAD)
-export GO111MODULE=on
 mkdir -p dist/
 
 
