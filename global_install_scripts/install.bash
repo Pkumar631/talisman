@@ -169,6 +169,7 @@ function run() {
 		mkdir -p ${TALISMAN_SETUP_DIR}
 		cp ${TEMP_DIR}/${TALISMAN_BINARY_NAME} ${TALISMAN_SETUP_DIR}
 		chmod +x ${TALISMAN_SETUP_DIR}/${TALISMAN_BINARY_NAME}
+		ln -s ${TALISMAN_SETUP_DIR}/${TALISMAN_BINARY_NAME} ${TALISMAN_SETUP_DIR}/talisman
 
 		sed -e "s@\${TALISMAN_BINARY}@"${TALISMAN_SETUP_DIR}/${TALISMAN_BINARY_NAME}"@" ${TEMP_DIR}/talisman_hook_script.bash >${TALISMAN_HOOK_SCRIPT_PATH}
 		chmod +x ${TALISMAN_HOOK_SCRIPT_PATH}
@@ -239,7 +240,6 @@ function run() {
 				echo "# >>> talisman >>>" >>$FILE_PATH
 				echo "# Below environment variables should not be modified unless you know what you are doing" >>$FILE_PATH
 				echo "export TALISMAN_HOME=${TALISMAN_SETUP_DIR}" >>$FILE_PATH
-				echo "alias talisman=\$TALISMAN_HOME/${TALISMAN_BINARY_NAME}" >>$FILE_PATH
 				echo "# <<< talisman <<<" >>$FILE_PATH
 			fi
 		fi
@@ -409,7 +409,7 @@ END_OF_SCRIPT
 	setup_git_template_talisman_hook
 	echo
 	echo "Setting up talisman hook recursively in git repos"
-	
+
 	if [[ "$SEARCH_ROOT" == "" ]]; then
 		read -p "Please enter root directory to search for git repos (Default: ${HOME}): " SEARCH_ROOT
 	fi
